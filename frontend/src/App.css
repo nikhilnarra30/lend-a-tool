@@ -1,0 +1,39 @@
+.app {
+  display: flex;
+  height: 87vh;
+  font-family: oxygen, sans-serif;
+}
+
+.map-panel {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  border-right: 2.5px solid black;
+  
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  height: 100px;
+  background-color: green;
+  align-items: center;
+  font-size: 45px;
+  font-family: oxygen, sans-serif;
+  border: 2.5px solid black;
+
+
+}
+
+.texttitle {
+  box-shadow: 10px 3px 10px;
+  padding: 5px;
+}
+
+#logo
+{
+  height: 75px;
+  width: 82px;
+  position: absolute;
+  left: 3px;
+}

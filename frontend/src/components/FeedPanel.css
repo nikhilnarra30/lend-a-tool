@@ -1,0 +1,36 @@
+#Feed-Community{
+    text-align: center;
+    font-size: 40px;
+    color: #ffffff;
+    -webkit-text-stroke: 0.3px rgb(0, 0, 0);
+    margin-bottom: 20px;
+    -webkit-text-stroke: 2.15px rgb(0, 0, 0);
+}
+
+
+.post {
+    border: 5px solid #291010;
+   
+    background-color: #2b4d05;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.post textarea, .post input { 
+    height: 100%;
+    width: 100%;
+}
+
+.post-button {
+    background-color: #4CAF50; 
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 35px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    -webkit-text-stroke: 0.2px rgb(255, 255, 255);
+}
+

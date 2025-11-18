@@ -1,0 +1,69 @@
+const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const cors = require('cors');
+
+const app = express();
+const PORT = 8000;
+
+app.use(cors());
+app.use(express.json());
+
+const db = new sqlite3.Database('./db.sqlite');
+
+
+db.serialize(() => {
+ // posts table
+ db.run('CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, latitude REAL, longitude REAL, created_at DATETIME DEFAULT CURRENT_TIMESTAMP)')
+ 
+    // replies table
+    db.run("CREATE TABLE IF NOT EXISTS REPLIES (id INTEGER PRIMARY KEY AUTOINCREMENT, post_id INTEGER, content TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(post_id) REFERENCES posts(id))")
+})
+// Get all posts with replies
+app.get("/api/posts", (req, res) => {
+    db.all("SELECT * FROM posts ORDER BY id DESC", (err, posts) => {
+        if (err) return res.send({ error: err.message })
+
+        const getReplies = posts.map ((post) =>
+            new Promise ((resolve, reject)=>{
+                db.all(
+                    "SELECT content From replies WHERE post_id = ? ORDER BY id ASC",
+                    [post.id],
+                    (err,replies) => {
+                        if (err) reject(err);
+                        else resolve({...post,replies:replies.map((r)=> r.content)});
+                        
+                    }
+                )
+            })
+        )
+        Promise.all(getReplies)
+        .then((results)=> res.send (results))
+        .catch((err)=> res.send ({error: err.message}));
+    
+    })
+})
+
+app.post("/api/posts", (req, res) => {
+     const {title, content, latitude, longitude} = req.body; 
+     if (!title || !content || !latitude || !longitude) {
+        return res.send({error: error.message})}
+    db.run("INSERT INTO posts (title, content, latitude, longitude) VALUES (?, ?, ?, ?)", [title, content, latitude, longitude], function(err) {
+        if (err) return res.send({ error: err.message })
+        res.send({id: this.lastID, title, content, latitude, longitude, replies: []})
+    })
+}) 
+
+app.post("/api/posts/:postID/reply", (req,res) => {
+    const {postID} = req.params;
+    const {content} = req.body;
+    if (!content) return res.send({error: "Content is required"})
+    db.run("INSERT INTO replies (post_id, content) VALUES (?, ?)", [postID, content], function(err) {
+        if (err) return res.send({ error: err.message })
+        res.send({id: this.lastID, post_id: postID, content})
+    })
+})
+
+app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`))
+
+
+
