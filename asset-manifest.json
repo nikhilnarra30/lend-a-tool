@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/lend-a-tool/static/css/main.66d857ed.css",
+    "main.js": "/lend-a-tool/static/js/main.73bdbc1a.js",
+    "index.html": "/lend-a-tool/index.html",
+    "main.66d857ed.css.map": "/lend-a-tool/static/css/main.66d857ed.css.map",
+    "main.73bdbc1a.js.map": "/lend-a-tool/static/js/main.73bdbc1a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.66d857ed.css",
+    "static/js/main.73bdbc1a.js"
+  ]
+}
