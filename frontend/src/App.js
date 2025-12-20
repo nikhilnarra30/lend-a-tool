@@ -36,6 +36,22 @@ useEffect( () => {
   setPosts(prev => [savedPost, ...prev])
  };
 
+ // Like a specific main post
+ const likePost = async(postId) => {
+   const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/like`, {
+     method: "PUT",
+     headers: {"Content-Type": "application/json"},
+   });
+   const likedPost = await response.json();
+   setPosts(
+     posts.map((p) => {
+       if (p.id === postId) {
+         return { ...p, like_count: likedPost.like_count };
+       }
+       return p;
+     })
+   );
+ };
 
  // Add a reply to a specific main post
  const addReply = async(postId, replyContent) => {
@@ -91,6 +107,7 @@ const savedReply = await response.json();
        posts={currentThreadPosts}
        onAddPost={addPost}
        onAddReply={addReply}
+       onLikePost={likePost}
        selectedLocation={selectedLocation}
      />
     

@@ -3,7 +3,7 @@ import { FaRegThumbsUp } from "react-icons/fa";
 import "./FeedPanel.css"
 import { FaThumbsUp } from "react-icons/fa";
 
-export default function FeedPanel({ posts, onAddPost, onAddReply, selectedLocation }) {
+export default function FeedPanel({ posts, onAddPost, onAddReply, onLikePost, selectedLocation }) {
  const [message, setMessage] = useState("");
  const [replyMessages, setReplyMessages] = useState({}); // key: postId
  const [clicked, setClicked] = useState(false);
@@ -90,8 +90,8 @@ export default function FeedPanel({ posts, onAddPost, onAddReply, selectedLocati
            {/* Main post */}
            <div style={{ fontWeight: "bold" }}>{post.title}</div>
            <div>{post.content}</div>
-           {clicked ? <FaThumbsUp onClick={handleLike} /> : <FaRegThumbsUp onClick={handleLike}/>   } 
-           
+           <div>{post.like_count} likes</div>
+           <button onClick={() => onLikePost(post.id)}>{clicked ? <FaThumbsUp onClick={handleLike} /> : <FaRegThumbsUp onClick={handleLike}/>   }</button>
 
            {/* Replies */}
            <div style={{ marginTop: "0.5rem", paddingLeft: "1rem" }}>
