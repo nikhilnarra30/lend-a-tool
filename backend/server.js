@@ -13,7 +13,7 @@ const db = new sqlite3.Database('./db.sqlite');
 
 db.serialize(() => {
  // posts table
- db.run('CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, latitude REAL, longitude REAL, created_at DATETIME DEFAULT CURRENT_TIMESTAMP)')
+ db.run('CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, latitude REAL, longitude REAL, like_count INTEGER DEFAULT 0,created_at DATETIME DEFAULT CURRENT_TIMESTAMP)')
  
     // replies table
     db.run("CREATE TABLE IF NOT EXISTS REPLIES (id INTEGER PRIMARY KEY AUTOINCREMENT, post_id INTEGER, content TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(post_id) REFERENCES posts(id))")
@@ -51,7 +51,16 @@ app.post("/api/posts", (req, res) => {
         if (err) return res.send({ error: err.message })
         res.send({id: this.lastID, title, content, latitude, longitude, replies: []})
     })
-}) 
+})
+
+app.put("/api/posts/:postID/like", (req, res) => {
+    const {postID} = req.params;
+    db.run("UPDATE posts SET like_count = like_count + 1 WHERE id = ?", [postID], function(err) {
+        if (err) return res.send({ error: err.message })
+        res.send({id: postID, like_count: this.changes})
+    })
+})
+
 
 app.post("/api/posts/:postID/reply", (req,res) => {
     const {postID} = req.params;
