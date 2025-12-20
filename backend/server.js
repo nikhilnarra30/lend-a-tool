@@ -63,7 +63,7 @@ app.post("/api/posts/:postID/reply", (req,res) => {
     })
 })
 
-app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`))
+app.listen(PORT, () => console.log(`Backend running on https://lend-a-tool-backend-uily.onrender.com`))
 
 
 

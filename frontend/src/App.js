@@ -9,7 +9,7 @@ function App() {
  const [selectedLocation, setSelectedLocation] = useState(null);
  
 useEffect( () => {
-  fetch("http://localhost:8000/api/posts")
+  fetch("https://lend-a-tool-backend-uily.onrender.comapi/posts")
   .then(res => res.json())
   .then(data => setPosts(data));
 
@@ -21,7 +21,7 @@ useEffect( () => {
      alert("Click on the map to select a location first");
      return;
    }
-   const response = await fetch("http://localhost:8000/api/posts", {
+   const response = await fetch("https://lend-a-tool-backend-uily.onrender.com/api/posts", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
@@ -39,7 +39,7 @@ useEffect( () => {
 
  // Add a reply to a specific main post
  const addReply = async(postId, replyContent) => {
-const response = await fetch(`http://localhost:8000/api/posts/${postId}/reply`, {
+const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/reply`, {
   method: "POST",
   headers: {"Content-Type": "application/json"},
   body: JSON.stringify({content: replyContent}),
