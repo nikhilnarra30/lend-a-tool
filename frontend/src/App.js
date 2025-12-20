@@ -9,7 +9,7 @@ function App() {
  const [selectedLocation, setSelectedLocation] = useState(null);
  
 useEffect( () => {
-  fetch("https://lend-a-tool-backend-uily.onrender.comapi/posts")
+  fetch("https://lend-a-tool-backend-uily.onrender.com/api/posts")
   .then(res => res.json())
   .then(data => setPosts(data));
 
