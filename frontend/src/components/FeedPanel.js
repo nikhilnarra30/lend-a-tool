@@ -1,13 +1,19 @@
 import { useState } from "react";
+import { FaRegThumbsUp } from "react-icons/fa";
 import "./FeedPanel.css"
+import { FaThumbsUp } from "react-icons/fa";
 
 export default function FeedPanel({ posts, onAddPost, onAddReply, selectedLocation }) {
  const [message, setMessage] = useState("");
  const [replyMessages, setReplyMessages] = useState({}); // key: postId
+ const [clicked, setClicked] = useState(false);
 
 
  const [title, setTitle] = useState("");
 
+  const handleLike = () => {
+    setClicked(!clicked);
+  }
 
  const handlePostSubmit = (e) => {
    e.preventDefault();
@@ -84,7 +90,8 @@ export default function FeedPanel({ posts, onAddPost, onAddReply, selectedLocati
            {/* Main post */}
            <div style={{ fontWeight: "bold" }}>{post.title}</div>
            <div>{post.content}</div>
-
+           {clicked ? <FaThumbsUp onClick={handleLike} /> : <FaRegThumbsUp onClick={handleLike}/>   } 
+           
 
            {/* Replies */}
            <div style={{ marginTop: "0.5rem", paddingLeft: "1rem" }}>

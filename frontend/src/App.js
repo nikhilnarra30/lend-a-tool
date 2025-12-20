@@ -70,7 +70,7 @@ const savedReply = await response.json();
  return (
   <>
    <nav>
-    <img src="LendATool Logo.png" id="logo"  />
+    <img src="LendATool_Logo.png" id="logo" alt = "Lend & Connect" />
     
     
    
