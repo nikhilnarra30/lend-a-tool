@@ -90,7 +90,7 @@ export default function FeedPanel({ posts, onAddPost, onAddReply, onLikePost, se
            {/* Main post */}
            <div style={{ fontWeight: "bold" }}>{post.title}</div>
            <div>{post.content}</div>
-           <div>{clicked ? post.like_count + 1 : post.like_count} likes</div>
+           <div>{post.like_count} likes</div>
            <button onClick={() => onLikePost(post.id)}>{clicked ? <FaThumbsUp onClick={handleLike} /> : <FaRegThumbsUp onClick={handleLike}/>   }</button>
 
            {/* Replies */}
