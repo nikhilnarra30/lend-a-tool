@@ -55,10 +55,11 @@ app.post("/api/posts", (req, res) => {
 
 app.put("/api/posts/:postID/like", (req, res) => {
     const {postID} = req.params;
-    db.run("UPDATE posts SET like_count = like_count + 1 WHERE id = ?", [postID], function(err) {
+    db.run("UPDATE posts SET like_count = like_count + 1 WHERE id = ?", [postID], function(err, row) {
         if (err) return res.send({ error: err.message })
-        res.send({id: postID, like_count: this.changes})
+        res.send({id: postID, like_count: row.like_count})
     })
+   
 })
 
 
