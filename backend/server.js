@@ -65,7 +65,7 @@ app.put("/api/posts/:postID/like", (req, res) => {
 })
 
 
-app.put("api/posts/:postID/unklike", (req, res) => {
+app.put("api/posts/:postID/unlike", (req, res) => {
     const {postID} = req.params;
     db.run( "UDPATE posts SET lke_count = like_count -1 WHERE id = ?", [postID], function(err) {
         if (err) return res.send ({error: err.message})
