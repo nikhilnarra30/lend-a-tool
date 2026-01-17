@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 8000;
 
-app.use(cors());
+app.use(cors({origin:'*'}));
 app.use(express.json());
 
 const db = new sqlite3.Database('./db.sqlite');
@@ -67,7 +67,7 @@ app.put("/api/posts/:postID/like", (req, res) => {
 
 app.put("api/posts/:postID/unlike", (req, res) => {
     const {postID} = req.params;
-    db.run( "UDPATE posts SET lke_count = like_count -1 WHERE id = ?", [postID], function(err) {
+    db.run( "UDPATE posts SET lke_count = MAX (like_count -1, 0) WHERE id = ?", [postID], function(err) {
         if (err) return res.send ({error: err.message})
         db.run("SELECT like_count FROM posts WHERE id = ?", [postID], function (err,row) {
             if (err) return res.send({error:err.message})

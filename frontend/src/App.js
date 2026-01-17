@@ -43,14 +43,7 @@ useEffect( () => {
      headers: {"Content-Type": "application/json"},
    });
    const likedPost = await response.json();
-   setPosts(
-     posts.map((p) => {
-       if (p.id === postId) {
-         return { ...p, like_count: likedPost.like_count };
-       }
-       return p;
-     })
-   );
+   setPosts(prev => prev.map(p => p.id === postId ? {...p, liked_count: likedPost.like_count } : p))
  };
 
  // Add a reply to a specific main post
