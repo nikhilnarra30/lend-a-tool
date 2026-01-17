@@ -45,8 +45,8 @@ app.get("/api/posts", (req, res) => {
 
 app.post("/api/posts", (req, res) => {
      const {title, content, latitude, longitude} = req.body; 
-     if (!title || !content || !latitude || !longitude) {
-        return res.send({error: error.message})}
+     if (!title || !content || latitude== null || longitude==null) {
+        return res.status(400).send({error: "Missing required fields"})} 
     db.run("INSERT INTO posts (title, content, latitude, longitude) VALUES (?, ?, ?, ?)", [title, content, latitude, longitude], function(err) {
         if (err) return res.send({ error: err.message })
         res.send({id: this.lastID, title, content, latitude, longitude, replies: []})
