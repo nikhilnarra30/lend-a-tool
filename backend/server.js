@@ -86,7 +86,7 @@ app.put("/api/posts/:postID/like", (req, res) => {
 
 app.put("/api/posts/:postID/unlike", (req, res) => {
     const {postID} = req.params;
-    db.run( "UDPATE posts SET lke_count = MAX (like_count -1, 0) WHERE id = ?", [postID], function(err) {
+    db.run( "UDPATE posts SET like_count = CASE WHEN like_count > 0 THEN like_count - 1 ELSE 0 END WHERE id = ?", [postID], function(err) {
         if (err) return res.send ({error: err.message})
         db.run("SELECT like_count FROM posts WHERE id = ?", [postID], function (err,row) {
             if (err) return res.send({error:err.message})
