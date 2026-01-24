@@ -13,10 +13,29 @@ const db = new sqlite3.Database('./db.sqlite');
 
 db.serialize(() => {
  // posts table
- db.run('CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, latitude REAL, longitude REAL, like_count INTEGER DEFAULT 0,created_at DATETIME DEFAULT CURRENT_TIMESTAMP)')
+ db.run(`
+    CREATE TABLE IF NOT EXISTS posts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT, 
+        content TEXT, 
+        latitude REAL, 
+        longitude REAL, 
+        like_count 
+        INTEGER DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+     )`
+    );
  
     // replies table
-    db.run("CREATE TABLE IF NOT EXISTS REPLIES (id INTEGER PRIMARY KEY AUTOINCREMENT, post_id INTEGER, content TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY(post_id) REFERENCES posts(id))")
+    db.run(`
+    CREATE TABLE IF NOT EXISTS replies (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        post_id INTEGER,
+        content TEXT, 
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY(post_id) REFERENCES posts(id)
+     )`
+    );
 })
 // Get all posts with replies
 app.get("/api/posts", (req, res) => {
