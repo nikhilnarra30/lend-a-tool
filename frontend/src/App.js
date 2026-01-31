@@ -7,7 +7,8 @@ import FeedPanel from "./components/FeedPanel";
 function App() {
  const [posts, setPosts] = useState([]); // array of thread posts with replies
  const [selectedLocation, setSelectedLocation] = useState(null);
- 
+ const [likedPosts, setLikedPosts] = useState(new Set())
+
 useEffect( () => {
   fetch("https://lend-a-tool-backend-uily.onrender.com/api/posts")
   .then(res => res.json())
@@ -38,14 +39,24 @@ useEffect( () => {
 
  // Like a specific main post
  const likePost = async(postId) => {
-   const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/like`, {
+   const isLiked = likedPosts.has(postID);
+   const endpoint = isLiked ? "unlike": "like";
+  const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/${endpoint}`, {
      method: "PUT",
      headers: {"Content-Type": "application/json"},
    });
-   const likedPost = await response.json();
-   setPosts(prev => prev.map(p => p.id === postId ? {...p, liked_count: likedPost.like_count } : p))
+   const data = await response.json();
+   setPosts(prev => prev.map(p => p.id === postId ? {...p, like_count: data.like_count } : p))
+   setLikedPosts(prev => {
+    const next = new Set(prev)
+    if (isLiked) {
+      next.delete(postID);
+    } else {
+      next.add(postID);
+    }
+   })
  };
-
+ 
  // Add a reply to a specific main post
  const addReply = async(postId, replyContent) => {
 const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/reply`, {
