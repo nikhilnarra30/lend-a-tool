@@ -3,7 +3,7 @@ import { FaRegThumbsUp } from "react-icons/fa";
 import "./FeedPanel.css"
 import { FaThumbsUp } from "react-icons/fa";
 
-export default function FeedPanel({ posts, onAddPost, onAddReply, onLikePost, selectedLocation }) {
+export default function FeedPanel({ posts, onAddPost, onAddReply, onLikePost, likedPosts, selectedLocation }) {
  const [message, setMessage] = useState("");
  const [replyMessages, setReplyMessages] = useState({}); // key: postId
   const [clicked, setClicked] = useState(false);

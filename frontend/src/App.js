@@ -56,7 +56,7 @@ useEffect( () => {
     }
    })
  };
- 
+
  // Add a reply to a specific main post
  const addReply = async(postId, replyContent) => {
 const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/reply`, {
@@ -112,6 +112,7 @@ const savedReply = await response.json();
        onAddPost={addPost}
        onAddReply={addReply}
        onLikePost={likePost}
+       likedPosts={likedPosts}
        selectedLocation={selectedLocation}
      />
     
