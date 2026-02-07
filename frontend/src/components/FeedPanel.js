@@ -84,7 +84,7 @@ const [replyMessages, setReplyMessages] = useState({}); // key: postId
            <div>{post.content}</div>
            
            <button onClick={() => onLikePost(post.id)}>
-            {LikedPosts.has(post.id) ? <FaThumbsUp  /> : <FaRegThumbsUp />}
+          {likedPosts.has(post.id) ? <FaThumbsUp  /> : <FaRegThumbsUp />}
             {post.like_count}
             </button>
 
