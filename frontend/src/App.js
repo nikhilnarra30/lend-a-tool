@@ -39,7 +39,7 @@ useEffect( () => {
 
  // Like a specific main post
  const likePost = async(postId) => {
-   const isLiked = likedPosts.has(postID);
+   const isLiked = likedPosts.has(postId);
    const endpoint = isLiked ? "unlike": "like";
   const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/${endpoint}`, {
      method: "PUT",
@@ -50,9 +50,9 @@ useEffect( () => {
    setLikedPosts(prev => {
     const next = new Set(prev)
     if (isLiked) {
-      next.delete(postID);
+      next.delete(postId);
     } else {
-      next.add(postID);
+      next.add(postId);
     }
    })
  };
