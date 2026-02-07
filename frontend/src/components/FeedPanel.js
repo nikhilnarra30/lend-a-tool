@@ -3,16 +3,9 @@ import { FaRegThumbsUp, FaThumbsUp } from "react-icons/fa";
 import "./FeedPanel.css"
 
 export default function FeedPanel({ posts, onAddPost, onAddReply, onLikePost, likedPosts, selectedLocation }) {
- const [message, setMessage] = useState("");
- const [replyMessages, setReplyMessages] = useState({}); // key: postId
-  const [clicked, setClicked] = useState(false);
-
-
+const [message, setMessage] = useState("");
+const [replyMessages, setReplyMessages] = useState({}); // key: postId
  const [title, setTitle] = useState("");
-
-  const handleLike = () => {
-    setClicked(!clicked);
-  }
 
  const handlePostSubmit = (e) => {
    e.preventDefault();
@@ -71,7 +64,7 @@ export default function FeedPanel({ posts, onAddPost, onAddReply, onLikePost, li
 
 
 
-
+        {/*Posts*/}
      <div style={{ marginTop: "1rem" }}>
        {posts.map((post) => (
          <div
@@ -89,8 +82,11 @@ export default function FeedPanel({ posts, onAddPost, onAddReply, onLikePost, li
            {/* Main post */}
            <div style={{ fontWeight: "bold" }}>{post.title}</div>
            <div>{post.content}</div>
-           <div>{post.like_count} likes</div>
-           <button onClick={() => onLikePost(post.id)}>{clicked ? <FaThumbsUp onClick={handleLike} /> : <FaRegThumbsUp onClick={handleLike}/>   }</button>
+           
+           <button onClick={() => onLikePost(post.id)}>
+            {LikedPosts.has(post.id) ? <FaThumbsUp  /> : <FaRegThumbsUp />}
+            {post.like_count}
+            </button>
 
            {/* Replies */}
            <div style={{ marginTop: "0.5rem", paddingLeft: "1rem" }}>

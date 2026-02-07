@@ -81,8 +81,9 @@ const savedReply = await response.json();
  const currentThreadPosts = selectedLocation
    ? posts.filter(
        (p) =>
-         p.latitude === selectedLocation.lat &&
-         p.longitude === selectedLocation.lng
+         Math.abs(p.latitude - selectedLocation.lat) < 0.00001 &&
+         Math.abs (p.longitude - selectedLocation.lng) < 0.00001
+         
      )
    : [];
 
