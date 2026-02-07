@@ -7,6 +7,7 @@ const [message, setMessage] = useState("");
 const [replyMessages, setReplyMessages] = useState({}); // key: postId
  const [title, setTitle] = useState("");
 
+
  const handlePostSubmit = (e) => {
    e.preventDefault();
    if (!title.trim() || !message.trim()) return;

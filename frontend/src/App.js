@@ -54,6 +54,7 @@ useEffect( () => {
     } else {
       next.add(postId);
     }
+    return next;
    })
  };
 
