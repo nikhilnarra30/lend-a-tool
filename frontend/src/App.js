@@ -39,9 +39,8 @@ useEffect( () => {
 
  // Like a specific main post
  const likePost = async(postId) => {
-   const isLiked = likedPosts.has(postId);
-   const endpoint = isLiked ? "unlike": "like";
-  const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/${endpoint}`, {
+  const isLiked = likedPosts.has(postId);
+  const response = await fetch(`https://lend-a-tool-backend-uily.onrender.com/api/posts/${postId}/toggle-like`, {
      method: "PUT",
      headers: {"Content-Type": "application/json"},
    });
