@@ -72,28 +72,29 @@ app.post("/api/posts", (req, res) => {
     })
 })
 
-app.put("/api/posts/:postID/like", (req, res) => {
+app.put("/api/posts/:postID/toggle-like", (req, res) => {
     const {postID} = req.params;
-    db.run("UPDATE posts SET like_count = like_count + 1 WHERE id = ?", [postID], function(err) {
-        if (err) return res.send({ error: err.message })
-        db.get("SELECT like_count FROM posts WHERE id = ?", [postID], function(err, row) {
-            if (err) return res.send({ error: err.message })
-            res.send({id: postID, like_count: row.like_count})
-        })
-    })
+    const {liked} = req.body;
+    const delta = liked ? 1 : -1;
+    db.run(
+        `UPDATE posts 
+         SET like_count = CASE 
+            WHEN like_count + ? < 0 THEN 0
+            ELSE like_count + ? 
+         END 
+         WHERE id = ?`,
+        [delta, delta, postID], 
+        function(err){
+            if (err) return res.send({error: err.message })
+
+            db.get(`SELECT like_count FROM posts WHERE id = ?`, {postID}, function(err,row){
+                if (err) return res.send({error: err.message})
+                return res.send ({id : postID, like_count : row.like_count})
+            })
+        }
+    )
 })
-
-
-app.put("/api/posts/:postID/unlike", (req, res) => {
-    const {postID} = req.params;
-    db.run( "UDPATE posts SET like_count = CASE WHEN like_count > 0 THEN like_count - 1 ELSE 0 END WHERE id = ?", [postID], function(err) {
-        if (err) return res.send ({error: err.message})
-        db.run("SELECT like_count FROM posts WHERE id = ?", [postID], function (err,row) {
-            if (err) return res.send({error:err.message})
-            res.send({id: postID, like_count: row.like_count})
-        })
-    })
-}) 
+    
 
 
 app.post("/api/posts/:postID/reply", (req,res) => {
